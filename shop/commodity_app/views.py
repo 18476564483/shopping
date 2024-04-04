@@ -169,3 +169,5 @@ def some_other_view(request):
     # 处理逻辑...  
     # 当你想要重定向到感谢页面时  
     return redirect('thank_you')
+
+
