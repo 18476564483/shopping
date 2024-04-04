@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录后主页</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .box {
+            width: calc(25% - 40px);
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .box img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">欢迎光临我们的商店</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- 导航链接 -->
+                    <li class="nav-item"><a class="nav-link" href="{% url 'shopping_cart' %}">购物车</a></li>
+                </ul>
+                {% if user.is_authenticated %}
+                <!-- 如果用户已登录，则显示用户名和注销链接 -->
+                <form class="d-flex">
+                    <a class="btn btn-outline-primary me-2" href="#">欢迎{{ user.username }}</a>
+                    <a class="btn btn-outline-danger" href="{% url 'public_home' %}">注销</a>
+                </form>
+                {% else %}
+                <!-- 如果用户未登录，则显示登录链接 -->
+                <a class="btn btn-outline-primary" href="#">登录</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <ul class="navbar-nav mr-auto">
+                <!-- 导航链接 -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'home_category_by_name' '谷物' %}">谷物</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home_category_by_name' '果蔬' %}">果蔬</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home_category_by_name' '畜产品' %}">畜产品</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home_category_by_name' '水产' %}">水产</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 产品展示 -->
+        {% for product in products %}
+        <div class="box">
+            <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">
+                {% if product.产品图片 %}
+                <img src="{{ product.产品图片.url }}" alt="{{ product.产品名称 }}">
+                {% else %}
+                <p>暂无图片</p>
+                {% endif %}
+                <h3>{{ product.产品名称 }}</h3>
+                <p>{{ product.产品描述 }}</p>
+                <p>价格: ¥{{ product.产品价格 }}</p>
+                <p>库存: {{ product.产品库存 }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

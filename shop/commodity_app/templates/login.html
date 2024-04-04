@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta 标签 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 页面标题 -->
+    <title>用户登录</title>
+    
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- 自定义样式 -->
+    <style>
+        /* 全局样式 */
+        body {
+            background-color: #f0f8ff; /* 淡绿色背景 */
+        }
+        
+        /* 登录容器样式 */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* 垂直居中 */
+        }
+        
+        /* 登录表单样式 */
+        .login-form {
+            border-radius: 15px; /* 圆角盒子 */
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+            text-align: center; /* 文本居中 */
+            max-width: 400px; /* 最大宽度 */
+            width: 100%; /* 宽度100% */
+        }
+        
+        /* 表单项样式 */
+        .form-group {
+            margin-bottom: 20px; /* 表单项间距 */
+        }
+        
+        /* 表单标签样式 */
+        .form-label {
+            width: 120px; /* 固定宽度 */
+            text-align: right; /* 文本右对齐 */
+            display: inline-block; /* 内联块级元素 */
+        }
+        
+        /* 表单输入框样式 */
+        .form-control {
+            width: calc(100% - 130px); /* 宽度计算 */
+            display: inline-block; /* 内联块级元素 */
+        }
+        
+        /* 登录按钮和返回按钮样式 */
+        .button-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* 间距 */
+        }
+        
+        /* 返回按钮样式 */
+        .return-button {
+            margin-top: 20px; /* 顶部间距 */
+        }
+        
+        /* 登录按钮样式 */
+        .login-button {
+            margin-top: 20px; /* 顶部间距 */
+        }
+        
+        /* 提示信息样式 */
+        .alert {
+            margin-top: 10px; /* 提醒信息顶部间距 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录容器 -->
+    <div class="login-container">
+        <h2>用户登录</h2>
+        
+        <!-- 登录表单 -->
+        <div class="login-form">
+            <form method="post">
+                {% csrf_token %}
+                <!-- 用户名表单项 -->
+                <div class="form-group mb-3">
+                    <label for="id_username" class="form-label">用户名：</label>
+                    <input type="text" class="form-control" id="id_username" name="username" required placeholder="请输入用户名">
+                </div>
+                <!-- 密码表单项 -->
+                <div class="form-group mb-3">
+                    <label for="id_password" class="form-label">密码：</label>
+                    <input type="password" class="form-control" id="id_password" name="password" required placeholder="请输入密码">
+                </div>
+                <!-- 按钮组 -->
+                <div class="button-group">
+                    <!-- 登录按钮 -->
+                    <button type="submit" class="btn btn-primary login-button">登录</button>
+                    <!-- 返回按钮 -->
+                    <a href="{% url 'public_home' %}" class="btn btn-secondary return-button">返回</a>
+                </div>
+                <!-- 提示信息区域 -->
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        用户名或密码错误，请重试。
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+        
+        <!-- 还没有账号提示 -->
+        <div class="mt-4">
+            <p>还没有账号？<a href="{% url 'register' %}">立即注册</a></p>
+        </div>
+    </div>
+
+    <!-- 引入 Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

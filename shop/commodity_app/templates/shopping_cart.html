@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <h5>商品详情</h5>
+            <div class="d-flex align-items-center">
+                <a class="nav-link me-3" href="{% url 'home' %}">首页</a>
+                <a class="nav-link" href="{% url 'shopping_cart' %}">前往购物车</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2>购物车</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">产品名称</th>
+                    <th scope="col">价格</th>
+                    <th scope="col">数量</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in shopping_cart_items %}
+                <tr>
+                    <td>{{ item.产品名称.产品名称 }}</td>
+                    <td>{{ item.产品名称.产品价格 }}</td>
+                    <td>{{ item.商品数量 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            <div class="me-3">
+                <p>总价：{{ total_price }}</p>
+            </div>
+            <form method="post" action="{% url 'checkout' %}">  
+                {% csrf_token %}  
+                <!-- 结算按钮 -->  
+                <button type="submit" class="btn btn-primary">结算</button>  
+            </form>
+        </form>
+    </div>
+</body>
+</html>

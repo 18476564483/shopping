@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公共视图</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .box {
+            width: calc(25% - 40px);
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .box img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div style="text-align: right; padding: 10px;">
+        <span>欢迎光临我们的商店</span> | <a href="{% url 'login' %}">登录</a> | <a href="{% url 'register' %}">注册</a>
+    </div>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <ul class="navbar-nav mr-auto">
+                <!-- 导航链接 -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_view_by_name' '谷物' %}">谷物</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_view_by_name' '果蔬' %}">果蔬</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_view_by_name' '畜产品' %}">畜产品</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_view_by_name' '水产' %}">水产</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 产品展示 -->
+        {% for product in products %}
+        <div class="box">
+            {% if product.产品图片 %}
+            {% comment %} <img src="{{ product.产品图片.url }}" alt="{{ product.产品名称 }}"> {% endcomment %}
+            {% else %}
+            <p>暂无图片</p>
+            {% endif %}
+            <h3>{{ product.产品名称 }}</h3>
+            <p>{{ product.产品描述 }}</p>
+            <p>价格: ¥{{ product.产品价格 }}</p>
+            <p>库存: {{ product.产品库存 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
